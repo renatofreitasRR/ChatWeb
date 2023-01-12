@@ -1,0 +1,72 @@
+.background{
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.background section {
+    width: 470px;
+    height: 500px;
+}
+
+.background h1{
+    margin-bottom: 1rem;
+
+    font-size: 4rem;
+    font-family: 'Caveat';
+    text-shadow: rgb(0, 0, 0) 2px 2px 2px;
+    color: #FFFF00;
+}
+
+.background section{
+    display: flex;
+    flex-direction: column;
+}
+
+.background section button{
+    margin-top: 1rem;
+
+    width: 100%;
+    height: 2.5rem;
+    
+    cursor: pointer;
+
+    background-color: #FFFF00;
+
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #4122FF;
+
+    border: none;
+    border-radius: 4px;
+}
+
+.background section input{
+    width: 100%;
+    height: 2.5rem;
+
+    border: none;
+    border-radius: 4px;
+
+    padding-left: 0.5rem;
+
+    font-size: 1.2rem;
+}
+
+.background section input:first-child{
+    margin-bottom: 0.7rem;
+}
+
+.background section input:focus{
+    outline: none!important;
+    border: 2px solid #FFFF00;
+}
+
+.background section small{
+    color: #FFFF00;
+    font-size: 1.2rem;
+}
