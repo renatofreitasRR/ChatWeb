@@ -1,6 +1,5 @@
 import { createRef, FormEvent, useContext, useEffect, useState } from "react"
 import { Message } from "../components/Message";
-import { UserContext } from "../contexts/userContext";
 import { MessageType, UserType } from "../interfaces/Message";
 import { IoMdSend, IoMdClose } from 'react-icons/io';
 
@@ -15,7 +14,7 @@ interface ChatProps {
     closeConnection: () => Promise<void>;
 }
 
-export function Chat({ messages, users, clientConnection, sender, sendMessage, closeConnection}: ChatProps) {
+export function Chat({ messages, users, clientConnection, sender, sendMessage, closeConnection }: ChatProps) {
     const [message, setMessage] = useState('');
     const messageRef = createRef<HTMLElement>();
 
@@ -38,42 +37,54 @@ export function Chat({ messages, users, clientConnection, sender, sendMessage, c
     }, [messages]);
 
     return (
-        <div className='background'>
-            <div className='content'>
-                <header>
-                    <IoMdClose
-                        className='close-icon'
-                        size={20}
-                        onClick={closeConnection}
-                    />
-                    <div className='header-user right'>
-                        <div className='user-icon'></div>
-                       
+        <div className='chat-background'>
+            <div className='chat-with-users'>
+                <aside>
+                    <h3>Usuários conectados</h3>
+                    <div className='users-list'>
+                        {users.map((user, index) => (
+                            <div key={index} className='user-connected'>
+                                <strong>{user}</strong>
+                            </div>
+                        ))}
                     </div>
-                </header>
-                <main ref={messageRef}>
-                    {messages.map((message, index) => (
-                        <Message
-                            key={index}
-                            side={message.user.isMyMessage ? 'right' : 'left'}
-                            userNickName={message.user.isMyMessage ? message.user.userNickName + '(Eu)' : message.user.userNickName}
-                            message={message.message}
+                </aside>
+                <div className='content'>
+                    <header>
+                        <IoMdClose
+                            className='close-icon'
+                            size={20}
+                            onClick={closeConnection}
                         />
-                    ))}
-                </main>
-                <footer>
-                    <form onSubmit={handleSendMessage}>
-                        <input
-                            type="text"
-                            placeholder='Digite a sua mensagem'
-                            onChange={(e) => setMessage(e.target.value)}
-                            value={message}
-                        />
-                        <button type="submit">
-                            <IoMdSend size={25} />
-                        </button>
-                    </form>
-                </footer>
+                        <div className='header-user right'>
+                            <div className='user-icon'></div>
+
+                        </div>
+                    </header>
+                    <main ref={messageRef}>
+                        {messages.map((message, index) => (
+                            <Message
+                                key={index}
+                                side={message.user.isMyMessage ? 'right' : 'left'}
+                                userNickName={message.user.isMyMessage ? message.user.userNickName + '(Eu)' : message.user.userNickName}
+                                message={message.message}
+                            />
+                        ))}
+                    </main>
+                    <footer>
+                        <form onSubmit={handleSendMessage}>
+                            <input
+                                type="text"
+                                placeholder='Digite a sua mensagem'
+                                onChange={(e) => setMessage(e.target.value)}
+                                value={message}
+                            />
+                            <button type="submit">
+                                <IoMdSend size={25} />
+                            </button>
+                        </form>
+                    </footer>
+                </div>
             </div>
         </div>
     )

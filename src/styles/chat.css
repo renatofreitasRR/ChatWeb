@@ -1,12 +1,38 @@
-background{
+.chat-background{
     width: 100vw;
     height: 100vh;
 
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
+
+.chat-with-users{
+    display: flex;
+}
+
+.chat-background aside{
+    width: 100px;
+    margin-right: 1rem;
+}
+
+.backgchat-backgroundround aside h3{
+    font-size: 1rem;
+    color: #FFFFFF;
+}
+
+.chat-background aside .users-list{
+    background-color: #FFF;
+    padding: 0.5rem;
+
+    border-radius: 8px;
+    margin-top: 0.5rem;
+}
+
+.chat-background aside .user-connected:not(:first-child){
+    margin-top: 0.8rem;
+}
+
 
 .content{
     background-color: #FFFFFF;

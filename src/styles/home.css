@@ -3,7 +3,6 @@
     height: 100vh;
 
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
@@ -69,4 +68,18 @@
 .background section small{
     color: #FFFF00;
     font-size: 1.2rem;
+}
+
+.group-item{
+    background-color: #FFFF00;
+
+    width: 200px;
+
+    border-radius: 4px;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

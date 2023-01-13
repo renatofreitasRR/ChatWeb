@@ -1,7 +1,6 @@
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { LogLevel } from "@microsoft/signalr/dist/esm/ILogger";
-import { useContext, useState } from "react";
-import { UserContext } from "../contexts/userContext";
+import { useContext, useEffect, useState } from "react";
 import { MessageType, UserType } from "../interfaces/Message";
 import { Chat } from "../pages/Chat";
 import { Home } from "../pages/Home";
@@ -11,13 +10,34 @@ export function Routes() {
     const [connection, setConnection] = useState<HubConnection>();
     const [messages, setMessages] = useState<MessageType[]>([]);
     const [users, setUsers] = useState<string[]>([]);
+    const [rooms, setRooms] = useState<string[]>([]);
     const [sender, setSender] = useState<UserType>();
     const [clientConnection, setClientConnection] = useState('');
 
+    async function getRooms() {
+        const connection = new HubConnectionBuilder()
+            .withUrl("http://localhost:7194/chat")
+            .configureLogging(LogLevel.Information)
+            .build();
+
+        connection.on("RoomsAvailable", (rooms) => {
+            setRooms(rooms);
+        });
+
+        await connection.start();
+        await connection.invoke("SendGroups");
+    }
+
+    useEffect(() => {
+        getRooms();
+    }, []);
+
     async function joinRoom(userNickName: string, room: string) {
         try {
+            closeConnection();
+
             const connection = new HubConnectionBuilder()
-                .withUrl("https://localhost:7194/chat")
+                .withUrl("http://localhost:7194/chat")
                 .configureLogging(LogLevel.Information)
                 .build();
 
@@ -25,7 +45,7 @@ export function Routes() {
                 setUsers(users);
             })
 
-            connection.on("ReceivedMessage", (sender : UserType, message) => {
+            connection.on("ReceivedMessage", (sender: UserType, message) => {
                 if (sender.id === connection.connectionId) {
                     sender.isMyMessage = true;
 
@@ -75,6 +95,7 @@ export function Routes() {
                 ?
                 <Home
                     joinRoom={joinRoom}
+                    groups={rooms}
                 />
                 :
                 <Chat
